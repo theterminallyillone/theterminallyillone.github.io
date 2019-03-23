@@ -1,0 +1,44 @@
+/*
+	Lorem, by Terminal Illness
+		---Style---
+*/
+
+body {
+	background: #000000;
+}
+button, a{
+	margin-left: 1%;
+	background: #9633FF;
+	border: solid;
+	border-width: 1px;
+	padding: 10px 10px;
+	text-align: center;
+	display: inline;
+	font-size: 15px;
+	cursor: pointer;
+	text-decoration:none;
+	color:#000000
+}
+object {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 815px;
+	height: 1056px;
+}
+.heading {
+	color: #FFFFFF;
+	font-family: 'Lucida Console', Monaco, monospace;
+	display: inline;
+}
+.text {
+	margin-top: 3%;
+	width: 900px;
+	background: #FFFFFF;
+	font-size: 10px;
+	font-family: 'Lucida Console', Monaco, monospace;
+	padding: 10px;
+}
+#showmore {
+	
+}
