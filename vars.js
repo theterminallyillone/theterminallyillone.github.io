@@ -3,7 +3,7 @@
 		---Variables---
 */
 
-var URL = window.location.href;
+var URL = "https://theterminallyillone.github.io/"; //window.location.href;
 var date = new Date();
 var dateString = "";
 var lastShownPage = 0;
