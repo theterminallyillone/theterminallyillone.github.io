@@ -16,37 +16,35 @@ function init() {
 	}
 	dateString += date.getFullYear().toString();
 	document.getElementById("date").innerHTML = dateString;
-	pager();
+	show(page);
 }
-function pager() {
-	for (let i = 0; i < pages.length; i++) {
-		showMore(pages[i], i);
-	}
-}
-function showMore(index, page) {
-	if (index.title.length > 0) {
-		for (let i = lastShownPage; i < lastShownPage+shownPages; ++i) {
-			if (index.title[i] != undefined) {
-				var insertString = "<div id='"+i+"' class='text'><h1>"+index.title[i].replace("-", " ")+" ["+index.ext[i]+"] "+index.city[i]+"<div style='float:right'>"+index.date[i]+"</div></h1><button id='b"+i.toString()+"' onclick=\"document.getElementById('b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';\">Display</button>";
-				if (index.ext[i] == "png" || index.ext[i] == "jpg" || index.ext[i] == "jpeg" || index.ext[i] == "gif") {
-					insertString += "<img id='pg"+page.toString()+"obj"+i+"' style='display:none' src='"+URL+"assets/"+page.toString()+"/"+index.title[i]+"_"+index.date[i]+"."+index.ext[i]+"'>";
-				} else if (index.ext[i] == "pdf") {
-					insertString += "<object type='application/pdf' id='pg"+page.toString()+"obj"+i.toString()+"'style='display:none' data='assets/"+page.toString()+"/"+index.title[i]+"_"+index.date[i]+"."+index.ext[i]+"'></object>";
-				} else if (index.ext[i] == "mp3") {
-					insertString +="<audio controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+page.toString()+"/"+index.title[i]+"_"+index.date[i]+"."+index.ext[i]+"' type='audio/"+index.ext[i]+"'></audio>";
+function show(page) {
+	if (pages[page].title.length > 0) {
+		for (let i = 0; i < pages[page].title.length; i++)	{
+			if (pages[page].title[i] != undefined) {
+				let insert = "<div id='pg"+page.toString()+"c"+i.toString()+"' class='text'><h1>"+pages[page].title[i].replace("-", " ")+" ["+pages[page].extension[i]+"] "+pages[page].city[i]+"<div style='float:right'>"+pages[page].date[i]+"</div></h1><button id='pg"+page.toString()+"b"+i.toString()+"' onclick=\"document.getElementById('pg"+page.toString()+"b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';\">Display</button>";
+				insert+="<div id='pg"+page.toString()+"obj"+i.toString()+"' style='display:none'><h2><pre>&#9"+pages[page].text[i]+"</pre><h2></div>";
+				if (pages[page].extension[i] == "png" || pages[page].extension[i] == "jpg" || pages[page].extension[i] == "jpeg" || pages[page].extension[i] == "gif") {
+					insert += "<img id='pg"+page.toString()+"obj"+i+"' style='display:none' src='"+URL+"assets/"+page.toString()+"/"+pages[page].title[i]+"_"+pages[page].date[i]+"."+pages[page].extension[i]+"'>";
+				} else if (pages[page].extension[i] == "pdf") {
+					insert += "<object type='application/pdf' id='pg"+page.toString()+"obj"+i.toString()+"'style='display:none' data='assets/"+page.toString()+"/"+pages[page].title[i]+"_"+pages[page].date[i]+"."+pages[page].extension[i]+"'></object>";
+				} else if (pages[page].extension[i] == "mp3") {
+					insert +="<audio controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+page.toString()+"/"+pages[page].title[i]+"_"+pages[page].date[i]+"."+pages[page].extension[i]+"' type='audio/"+pages[page].extension[i]+"'></audio>";
 				}
-				insertString += "</div>";
-				document.getElementById("content").insertAdjacentHTML("beforeend", insertString);
-			} else {
-				document.getElementById("showmore").style = "display:none";
-				break;
+				insert += "</div>";
+				document.getElementById("content").insertAdjacentHTML("beforeend", insert);
 			}
 		}
+		if (pages[page+1] == undefined) {
+			let insert = "<center class='text'><h1>No more content has been uploaded.</h1></center>";
+			document.getElementById("content").insertAdjacentHTML("beforeend", insert);
+			document.getElementById("showmore").style = "display:none";
+		}
 	} else {
-		var insertString = "<center class='text'><h1>No content has been uploaded.</h1></center>";
-		document.getElementById("content").insertAdjacentHTML("beforeend", insertString);
+		let insert = "<center class='text'><h1>No content has been uploaded.</h1></center>";
+		document.getElementById("content").insertAdjacentHTML("beforeend", insert);
 		document.getElementById("showmore").style = "display:none";
 	}
-	lastShownPage += shownPages;
 }
+
 init();

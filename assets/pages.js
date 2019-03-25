@@ -1,8 +1,14 @@
+/*
+	Lorem, by Terminal Illness
+		---JSON---
+*/
+
 var pages = [
 	{
-		title : [],
 		city : [],
-		ext : [],
-		date : []
-	}
+		date : [],
+		extension : [],
+		text : [],
+		title : [],
+	},
 ];
