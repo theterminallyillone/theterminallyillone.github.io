@@ -16,10 +16,15 @@
 	<div class="heading">
 		<h1>Terminal Illness<div id="date" style="float:right;"></div><div style="font-size:20px;margin-left:5%;">theterminallyillone@gmail.com</div></h1>
 	</div>
+	<div id="showremoved" class="text" style="display:none">
+		<center>
+		<h1>Click<button onclick="remove(); if(page-1 != 0) {page-=1;} else { page -=1; document.getElementById('showremoved').style='display:none'} show(page);" style="margin-right:1%">here</button>to show more content.</h1>
+		</center>
+	</div>
 	<div id="content"></div>	
 	<div id="showmore" class="text">
 		<center>
-		<h1>Click<button onclick="page+=1; show(page);" style="margin-right:1%">here</button>to show more content.</h1>
+		<h1>Click<button onclick="remove(); document.getElementById('showremoved').style=''; page+=1; show(page);" style="margin-right:1%">here</button>to show more content.</h1>
 		</center>
 	</div>
 	<script src="vars.js"></script>
