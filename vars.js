@@ -1,5 +1,5 @@
 /*
-	Lorem, by Terminal Illness
+	UN RÊVE, by Terminal Illness
 		---Variables---
 		
 	***REMEMBER TO DATE ENTRIES AS FOLLOWS***

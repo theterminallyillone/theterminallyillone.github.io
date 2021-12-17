@@ -1,5 +1,5 @@
 /*
-	Lorem, by Terminal Illness
+	UN RÊVE, by Terminal Illness
 		---JSON---
 			
 	***REMEMBER TO DATE ENTRIES AS FOLLOWS***
@@ -7,7 +7,7 @@
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
 var pages = [
-	["Here We Are_Greenwood_IN_2021-12-16_.txt","My first commit","Clouds_Coldwater_MI_2021-11-27_.pdf","A creative endeavor under the influence of Mary Jane.#poetry","Bedtime_Greenwood_IN_2021-09-21_.pdf","This was written during a 4 hour drive, I was in the mood.#poetry","Sunken_Greenwood_IN_2021-09-11_.pdf","Sad boi mood here.#poetry","E86F9A_Greenwood_IN_2021-07-20_.pdf","I was inspired by the color pink, if you couldn't tell.#poetry","Little Moon_Greenwood_IN_2021-07-14_.pdf","This poem was written for my little girl.#poetry"]
+	["Welcome!_Greenwood_IN_2021-12-16_.txt","Pull up a chair, and join us!","Clouds_Coldwater_MI_2021-11-27_.pdf","A creative endeavor under the influence of Mary Jane.#poetry","Bedtime_Greenwood_IN_2021-09-21_.pdf","This was written during a 4 hour drive, I was in the mood.#poetry","Sunken_Greenwood_IN_2021-09-11_.pdf","Sad boi mood here.#poetry","E86F9A_Greenwood_IN_2021-07-20_.pdf","I was inspired by the color pink, if you couldn't tell.#poetry","Little Moon_Greenwood_IN_2021-07-14_.pdf","This poem was written for my little girl.#poetry"]
 ];
 var pagetitles = [
 	"The Beginning"
