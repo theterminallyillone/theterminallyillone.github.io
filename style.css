@@ -1,0 +1,70 @@
+/*
+	Lorem, by Terminal Illness
+		---Style---
+
+	***REMEMBER TO DATE ENTRIES AS FOLLOWS***
+		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
+		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
+*/
+
+body {
+	background: #000000;
+}
+button {
+	margin-left: 1%;
+	border: solid;
+	border-width: 1px;
+	padding: 10px 10px;
+	text-align: center;
+	display: inline;
+	font-size: 15px;
+	cursor: pointer;
+	text-decoration:none;
+	color:#000000
+}
+object {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 815px;
+	height: 1056px;
+}
+.heading, #pagetitle {
+	color: #FFFFFF;
+	font-family: 'Lucida Console', Monaco, monospace;
+	display: inline;
+}
+.text {
+	margin-top: 3%;
+	width: 900px;
+	background: #FFFFFF;
+	font-size: 10px;
+	font-family: 'Lucida Console', Monaco, monospace;
+	padding: 10px;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.tags {
+	font-family:monospace;
+	margin-left:5%;
+	color:#FFFFFF;
+}
+.tagbutton {
+	margin-left:2%;
+	font-size: 2vw;
+	cursor: pointer;
+}
+#title {
+	font-size: 4vw;
+	margin-top:5%;
+	margin-bottom:5%;
+}
+#pagetitle {
+	font-size:2vw;
+}
+#dot {
+	height: 300px;
+	width: 300px;
+	border-radius: 50%;
+	display: inline-block;
+}

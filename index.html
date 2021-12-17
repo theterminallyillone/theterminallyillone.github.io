@@ -1,0 +1,77 @@
+<!--
+	Lorem, by Terminal Illness
+		---HTML---
+
+	***REMEMBER TO DATE ENTRIES AS FOLLOWS***
+		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
+		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title id = "tabtitle"></title>
+	<link rel="shortcut icon" href="icon.png"/>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body onload="">
+	<script src="vars.js"></script>
+	<script src="pages.js"></script>
+	<div class="heading">
+		<center>
+			<div id="title"></div>
+		</center>
+		<h1>
+			<div id="contactinsert" style="font-size:1.5vw;margin-left:5%;">
+				<div id="entries"></div>
+				<div id="pager"></div>
+				<div id="noentries"></div>
+			</div>
+		</h1>
+		<div id="scroll" style="font-size:20px;">
+		<br>
+		<center>SCROLL
+		<br>
+		<br>| | |
+		<br>V V V
+		</center>
+		</div>
+		<div id="pagetitle"></div>
+	</div>
+	<div id="showremoved" class="text" style="display:none">
+		<center>
+			<h1>Click
+			<button onclick="remove(); if(page-1 != 0) {page-=1;} else { page -=1; document.getElementById('showremoved').style='display:none'} show(page);" style="margin-right:1%">here
+			</button>to show more content.</h1>
+		</center>
+	</div>
+	<div id="content"></div>	
+	<div id="showmore" class="text">
+		<h1>Click
+		<button onclick="remove(); document.getElementById('showremoved').style=''; page+=1; show(page);" style="margin-right:1%">here
+		</button>to show more content.
+		</h1>
+	</div>
+	<br><br><div class="tags" id="tagbuttons"><span class="tagbutton" style="margin-left:0;"onclick="resetpages()"><b>#ALL</b></span></div><br><br>
+		<center>
+		<div class="heading">
+			<div style="margin-top:5%;" id="donatetitle">
+				<h4>Direct charitable donations of BTC below.
+				</h4>
+			</div>
+			<div id="stars">&star;
+				<span id="dot">
+					<div id="svgdiv" style="margin-top:17%;"></div>
+				</span>&star;
+			</div>
+			<div id="address" style="color:red;margin-top:1%"></div>
+			<div id="balance" style="color:red; font: 15px monospace; margin-top:1%;"><u>ERROR</u>
+				<span style='color:white'> BTC Funded</span>
+			</div>
+		</div><br><br><br><img src="van.png"><hr style="color:#FFFFFF; margin-top:-5px;">
+	</center>
+	<div id="DOB" class="heading" style="display:block; margin-top:5%;text-align:right;"></div>
+	<script src="src.js"></script>
+	</body>
+</html>

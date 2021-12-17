@@ -1,0 +1,172 @@
+/*
+	Lorem, by Terminal Illness
+		---Source---
+
+	***REMEMBER TO DATE ENTRIES AS FOLLOWS***
+		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
+		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
+*/
+
+function init() {
+	document.getElementById("svgdiv").innerHTML = svgcodeinner+buttoncolors[currentcolor]+svgcodeouter;
+	changeColor();
+	document.getElementById("address").innerHTML = walletaddress;
+	client.get(walletContentsURL, function(response) {
+		document.getElementById("balance").innerHTML = "<span style='color:yellow'><u>"+convertSatoshis(JSON.parse(response).final_balance).toString()+"</u></span><span style='color:white'> BTC Funded</span>";
+	});
+	pages = sendpages(pages);
+	origpages = pages;
+	origtitles = pagetitles;
+	document.getElementById("DOB").innerHTML = DOB;
+	document.getElementById("tabtitle").innerHTML = tabtitle;
+	document.getElementById("title").innerHTML = "<b>"+title+"</b><br>";
+	show(page);
+	insertDashes(document.getElementById("title").innerHTML.length-11, "title", "beforeend");
+	for (var i = 0; i < contacts.length; i++){
+		insertDashes(contacts[i].length+2, "contactinsert", "afterbegin");
+		document.getElementById("contactinsert").insertAdjacentHTML("afterbegin","<br>+ "+contacts[i]+"<br>");
+	}
+	insertDashes(contacts[contacts.length-1].length+2, "contactinsert", "afterbegin");
+	document.getElementById("entries").innerHTML="There are "+totalentries.toString()+" total entries.";
+	document.getElementById("entries").insertAdjacentHTML("beforeend","<br>");
+	insertDashes(document.getElementById("entries").innerHTML.length-4, "entries", "beforeend");
+	if (window.innerHeight > document.getElementById("pagetitle").offsetTop) {
+		document.getElementById("pagetitle").style = "display:block; margin-top:"+((window.innerHeight-document.getElementById("pagetitle").offsetTop)+20).toString()+"px;";
+	}
+	for (var i = 1; i < tags.length; i++) {
+		document.getElementById("tagbuttons").insertAdjacentHTML("beforeend", "<span class='tagbutton' onclick='sortsentpages(\""+tags[i]+"\")' style='color:"+tagcolors[i]+";'><b>#"+tags[i]+"</b></span>");
+	}
+	setInterval(changeColor, timechange);
+}
+function changeColor() {
+	for (i = 0; i < document.getElementsByTagName("button").length; i++) {
+		document.getElementsByTagName("button")[i].style.background = buttoncolors[currentcolor];
+	}
+	document.getElementById("dot").style.backgroundColor=buttoncolors[currentcolor];
+	document.getElementById("stars").style.color=buttoncolors[currentcolor];
+	document.getElementById("title").style.color=buttoncolors[currentcolor];
+	document.getElementById("scroll").style.color=buttoncolors[currentcolor];
+	document.getElementById("svgdiv").innerHTML = svgcodeinner+buttoncolors[currentcolor]+svgcodeouter;
+	currentcolor++
+	if (currentcolor == buttoncolors.length) {
+		currentcolor = 0;
+	}
+}
+function sortsentpages(tag) {
+	pages = origpages;
+	pagetitles = origtitles;
+	var loaded = sortByTag(tag);
+	pages = loaded.pages;
+	pagetitles = loaded.titles;
+	document.getElementById("content").innerHTML = "";
+	document.getElementById("showremoved").style="display:none";
+	page = 0;
+	show(page);
+}
+function resetpages() {
+	pages = origpages;
+	pagetitles = origtitles;
+	document.getElementById("content").innerHTML = "";
+	document.getElementById("showremoved").style="display:none";
+	page = 0;
+	show(page);
+}
+function sortByTag(tag) {
+	var sortedPages = {
+		pages : [['']],
+		titles : []
+	}
+	var pushed = false;
+	for (var i = 0; i < pages.length; i++) {
+		for (var j = 0; j < pages[i].length; j++) {
+			if (pages[i][j].tags.includes(tag)) {
+				sortedPages.pages[i].push(pages[i][j]);
+				pushed = true;
+			}
+		}
+		if (pushed) {
+			sortedPages.titles.push(pagetitles[i]);
+		}
+		sortedPages.pages.push([]);
+		pushed = false;
+	}
+	sortedPages.pages[0].shift();
+	sortedPages.pages = sortedPages.pages.filter(function (el) {if(el.length>0){return el;}});
+	return sortedPages;
+}
+function convertSatoshis(satoshi) {
+	return satoshi*0.00000001;
+}
+function insertDashes(Dashlength, itemid, where) {
+	for (var i = 0; i < Dashlength; i++) {
+		 document.getElementById(itemid).insertAdjacentHTML(where,"-");
+	}
+}
+function remove() {
+	document.getElementById("content").innerHTML = ""
+	document.getElementById("showremoved").style="";
+}
+function sendpages(pages) {
+	var pagearray = pages;
+	pages = [];
+	for (var i = 0; i < pagearray.length; i++) {
+		pages.push([]);
+		for (var j = 0; j < pagearray[i].length; j+=2) {
+			pages[i].push(new item(pagearray[i][j],pagearray[i][j+1]));
+			totalentries++;
+		}
+	}
+	return pages;
+}
+function show(page) {
+	document.getElementById("pager").innerHTML="This is page "+(page+1).toString()+"/"+pages.length+".<br>";
+	insertDashes(document.getElementById("pager").innerHTML.length-4, "pager", "beforeend");
+	if (pages[page].length > 1) {
+		document.getElementById("noentries").innerHTML="There are "+(pages[page].length).toString()+" entries on this page.<br>";
+	} else {
+		document.getElementById("noentries").innerHTML="There is "+(pages[page].length).toString()+" entry on this page.<br>";
+	}
+	insertDashes(document.getElementById("noentries").innerHTML.length-4, "noentries", "beforeend");
+	document.getElementById("pagetitle").innerHTML = "<center><h1><b><u>"+pagetitles[page]+"</u></b></center>";
+	if (pages[page].length > 0) {
+		for (let i = 0; i < pages[page].length; i++)	{
+			if (pages[page][i].title != undefined) {
+				let insert = "<div id='pg"+page.toString()+"c"+i.toString()+"' class='text'><h1>"+pages[page][i].title.replace(/-/g, " ")+" ["+pages[page][i].extension+"] "+pages[page][i].city+"<div style='float:right'>"+pages[page][i].date+"</div></h1><button id='pg"+page.toString()+"b"+i.toString()+"' onclick=\"document.getElementById('pg"+page.toString()+"b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';document.getElementById('pg"+page.toString()+"tex"+i.toString()+"').style='';\">Display</button>";
+				insert+="<div id='pg"+page.toString()+"tex"+i.toString()+"' style='display:none'><h2><pre>";
+				for (var j = 0; j < pages[page][i].tags.length; j++) {
+					insert+=("#"+pages[page][i].tags[j]).fontcolor(tagcolors[tags.indexOf(pages[page][i].tags[j])])+" ";
+				}
+				insert+="<br><br>&#9"+pages[page][i].text+"</pre><h2></div><br>";
+				if (pages[page][i].extension == "png" || pages[page][i].extension == "jpg" || pages[page][i].extension == "jpeg" || pages[page][i].extension == "gif") {
+					insert += "<img id='pg"+page.toString()+"obj"+i+"' style='display:none' src='"+URL+"assets/"+pages[page][i].filename+"'>";
+				} else if (pages[page][i].extension == "pdf") {
+					insert += "<object type='application/pdf' id='pg"+page.toString()+"obj"+i.toString()+"'style='display:none' data='assets/"+pages[page][i].filename+"'></object>";
+				} else if (pages[page][i].extension == "mp3" || pages[page][i].extension == "wav") {
+					insert += "<audio controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='audio/"+pages[page][i].extension+"'></audio>";
+				} else if (pages[page][i].extension == "mp4") {
+					insert += "<video controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='video/"+pages[page][i].extension+"'>/video>";
+				} else if (pages[page][i].extension == "txt") {
+					insert += "<div id='pg"+page.toString()+"obj"+i.toString()+"'></div>";
+				}
+				insert += "</div>";
+				document.getElementById("content").insertAdjacentHTML("beforeend", insert);
+			}
+		}
+		if (pages[page+1] == undefined) {
+			let insert = "<center class='text'><h1>No more content has been uploaded.</h1></center>";
+			document.getElementById("content").insertAdjacentHTML("beforeend", insert);
+			document.getElementById("showmore").style = "display:none";
+		} else {
+			document.getElementById("showmore").style="";
+		}
+	} else {
+		let insert = "<center class='text'><h1>No content has been uploaded.</h1></center>";
+		document.getElementById("content").insertAdjacentHTML("beforeend", insert);
+		document.getElementById("showmore").style = "display:none";
+	}
+	for (i = 0; i < document.getElementsByTagName("button").length; i++) {
+		document.getElementsByTagName("button")[i].style.background = buttoncolors[currentcolor];
+	}
+}
+
+init();
