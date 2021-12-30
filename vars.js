@@ -25,6 +25,10 @@ var item = function(filename, text) {
 	this.extension = filename[4].substr(filename[4].lastIndexOf(".")+1,filename[4].length);
 	this.text = text;
 	this.tags  = [];
+	this.downloadable = true;
+	if (nondownloadabletypes.includes(this.extension)) {
+		this.downloadable = false;
+	}
 	for (var i = 0; i < tags.length; i++) {
 		if (this.text.split("#"+tags[i]).length > 1) {
 			this.tags.push(tags[i]);

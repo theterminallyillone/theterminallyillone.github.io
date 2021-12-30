@@ -131,12 +131,15 @@ function show(page) {
 	if (pages[page].length > 0) {
 		for (let i = 0; i < pages[page].length; i++)	{
 			if (pages[page][i].title != undefined) {
-				let insert = "<div id='pg"+page.toString()+"c"+i.toString()+"' class='text'><h1>"+pages[page][i].title.replace(/-/g, " ")+" ["+pages[page][i].extension+"] "+pages[page][i].city+"<div style='float:right'>"+pages[page][i].date+"</div></h1><button id='pg"+page.toString()+"b"+i.toString()+"' onclick=\"document.getElementById('pg"+page.toString()+"b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';document.getElementById('pg"+page.toString()+"tex"+i.toString()+"').style='';\">Display</button>";
+				let insert = "<div id='pg"+page.toString()+"c"+i.toString()+"' class='text'><h1>"+pages[page][i].title.replace(/-/g, " ")+" ["+pages[page][i].extension+"] "+pages[page][i].city+"<div style='float:right'>"+pages[page][i].date+"</div></h1><button id='pg"+page.toString()+"b"+i.toString()+"' onclick=\"document.getElementById('pg"+page.toString()+"b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';document.getElementById('pg"+page.toString()+"tex"+i.toString()+"').style='';document.getElementById('dpg"+page.toString()+"obj"+i.toString()+"').style='';\">Display</button>";
 				insert+="<div id='pg"+page.toString()+"tex"+i.toString()+"' style='display:none'><h2><pre>";
 				for (var j = 0; j < pages[page][i].tags.length; j++) {
 					insert+=("#"+pages[page][i].tags[j]).fontcolor(tagcolors[tags.indexOf(pages[page][i].tags[j])])+" ";
 				}
-				insert+="<br><br>&#9"+pages[page][i].text+"</pre><h2></div><br>";
+				insert+="<br><br>&#9"+pages[page][i].text+"</pre></h2></div>";
+				if(pages[page][i].downloadable) {
+					insert +="<br><button style='display:none' id='dpg"+page.toString()+"obj"+i.toString()+"'><a href='"+pages[page][i].filename+"' download>Download</a></button><br><br><br>";
+				}
 				if (pages[page][i].extension == "png" || pages[page][i].extension == "jpg" || pages[page][i].extension == "jpeg" || pages[page][i].extension == "gif") {
 					insert += "<img id='pg"+page.toString()+"obj"+i+"' style='display:none' src='"+URL+"assets/"+pages[page][i].filename+"'>";
 				} else if (pages[page][i].extension == "pdf") {
@@ -145,7 +148,7 @@ function show(page) {
 					insert += "<audio controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='audio/"+pages[page][i].extension+"'></audio>";
 				} else if (pages[page][i].extension == "mp4") {
 					insert += "<video controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='video/"+pages[page][i].extension+"'>/video>";
-				} else if (pages[page][i].extension == "txt") {
+				} else if (pages[page][i].extension == "txt" || pages[page][i].extension == "msg") {
 					insert += "<div id='pg"+page.toString()+"obj"+i.toString()+"'></div>";
 				}
 				insert += "</div>";

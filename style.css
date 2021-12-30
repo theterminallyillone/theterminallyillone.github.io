@@ -6,7 +6,10 @@
 		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
-
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
 body {
 	background: #000000;
 }
