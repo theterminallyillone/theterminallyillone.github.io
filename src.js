@@ -138,7 +138,7 @@ function show(page) {
 				}
 				insert+="<br><br>&#9"+pages[page][i].text+"</pre></h2></div>";
 				if(pages[page][i].downloadable) {
-					insert +="<br><button style='display:none' id='dpg"+page.toString()+"obj"+i.toString()+"'><a href='"+pages[page][i].filename+"' download>Download</a></button><br><br><br>";
+					insert +="<br><button style='display:none' id='dpg"+page.toString()+"obj"+i.toString()+"'><a href='assets/"+pages[page][i].filename+"' download>Download</a></button><br><br><br>";
 				}
 				if (pages[page][i].extension == "png" || pages[page][i].extension == "jpg" || pages[page][i].extension == "jpeg" || pages[page][i].extension == "gif") {
 					insert += "<img id='pg"+page.toString()+"obj"+i+"' style='display:none' src='"+URL+"assets/"+pages[page][i].filename+"'>";
