@@ -147,9 +147,11 @@ function show(page) {
 				} else if (pages[page][i].extension == "mp3" || pages[page][i].extension == "wav") {
 					insert += "<audio controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='audio/"+pages[page][i].extension+"'></audio>";
 				} else if (pages[page][i].extension == "mp4") {
-					insert += "<video controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='video/"+pages[page][i].extension+"'>/video>";
-				} else if (pages[page][i].extension == "txt" || pages[page][i].extension == "msg") {
-					insert += "<div id='pg"+page.toString()+"obj"+i.toString()+"'></div>";
+					insert += "<video controls style='display:none' id='pg"+page.toString()+"obj"+i.toString()+"'><source src='assets/"+pages[page][i].filename+"' type='video/"+pages[page][i].extension+"'</video>";
+				} else if (pages[page][i].extension == "msg") {
+					insert += "<br><br><br><div id='pg"+page.toString()+"obj"+i.toString()+"'></div><br>";
+				} else if (pages[page][i].extension == "txt") {
+					insert += "<embed width='900px' height='350vw' style='display:none;' id='pg"+page.toString()+"obj"+i.toString()+"' src='assets/"+pages[page][i].filename+"'>";
 				}
 				insert += "</div>";
 				document.getElementById("content").insertAdjacentHTML("beforeend", insert);
@@ -171,5 +173,26 @@ function show(page) {
 		document.getElementsByTagName("button")[i].style.background = buttoncolors[currentcolor];
 	}
 }
-
+function replaceWord(str, filter, word) {
+	var done = false;
+	while (!done) {
+		if (str.includes(filter)) {
+			str = str.replace(filter, word);
+		} else {
+			done = true;
+		}
+	}
+	return str;
+}
+function genrss(pages) {
+	//RSS GENERATION GETS LOGGED IN CONSOLE
+	var RSSstr = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n<atom:link href=\"https://theterminallyillone.github.io/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n<title>UN RÊVE</title>\n<link>"+rssURL+"</link>\n<description>RSS feed</description>\n";
+	for (var p = 0; p < pages.length; p++) {
+		for (var i = 0; i < pages[p].length; i+=2) {
+			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL+"assets/"+replaceWord(pages[p][i], " ", "%20")+"</link>\n<description>"+pages[p][i+1]+"</description>\n</item>\n";
+		}
+	}
+	console.log(RSSstr+"</channel>\n</rss>")
+}
+genrss(pages);
 init();

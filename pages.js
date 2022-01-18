@@ -20,6 +20,7 @@ var timechange = 2000;
 var buttoncolors = ["#c23030", "#e67627", "#c8d121", "#32a858", "#4287f5", "#a138a8"];
 var nondownloadabletypes = ["msg"];
 var minWinWidth = 600;
+var rssURL = "https://theterminallyillone.github.io/"
 var tabtitle = "un rêve";
 var title = "UN RÊVE";
 var DOB = "DOB: 2021-12-16"
