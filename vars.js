@@ -51,3 +51,4 @@ var HttpClient = function() {
 	}
 }
 var client = new HttpClient();
+var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
