@@ -189,7 +189,9 @@ function genrss(pages) {
 	var RSSstr = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n<atom:link href=\"https://theterminallyillone.github.io/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n<title>UN RÊVE</title>\n<link>"+rssURL+"</link>\n<description>RSS feed</description>\n";
 	for (var p = 0; p < pages.length; p++) {
 		for (var i = 0; i < pages[p].length; i+=2) {
-			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL+"assets/"+replaceWord(pages[p][i], " ", "%20")+"</link>\n<description>"+pages[p][i+1]+"</description>\n</item>\n";
+			var pubdate = pages[p][i].split("_")[3].toString().split("-");
+			pubdate = pubdate[0]+" "+months[pubdate[1]-1]+" "+pubdate[2]
+			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL+"assets/"+replaceWord(pages[p][i], " ", "%20")+"</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+pubdate+"</pubDate>\n</item>\n";
 		}
 	}
 	console.log(RSSstr+"</channel>\n</rss>")
