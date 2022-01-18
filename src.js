@@ -190,7 +190,7 @@ function genrss(pages) {
 	for (var p = 0; p < pages.length; p++) {
 		for (var i = 0; i < pages[p].length; i+=2) {
 			var pubdate = pages[p][i].split("_")[3].toString().split("-");
-			pubdate = pubdate[2]+" "+months[pubdate[1]-1]+" "+pubdate[0]+" 05:00:00 -0000";
+			pubdate = pubdate[2]+" "+months[pubdate[1]-1]+" "+pubdate[0]+" 00:00:00 EST";
 			var day = days[new Date(pubdate).getDay()];
 			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL+"assets/"+replaceWord(pages[p][i], " ", "%20")+"</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+day+", "+pubdate+"</pubDate>\n</item>\n";
 		}
