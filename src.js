@@ -8,6 +8,9 @@
 */
 
 function init() {
+	if (page > pagetitles.length-1 || page < 0) {
+		page = 0;
+	}
 	document.getElementById("svgdiv").innerHTML = svgcodeinner+buttoncolors[currentcolor]+svgcodeouter;
 	changeColor();
 	document.getElementById("address").innerHTML = walletaddress;
@@ -192,7 +195,13 @@ function genrss(pages) {
 			var pubdate = pages[p][i].split("_")[3].toString().split("-");
 			pubdate = pubdate[2]+" "+months[pubdate[1]-1]+" "+pubdate[0]+" 00:00:00 EST";
 			var day = days[new Date(pubdate).getDay()];
-			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL+"assets/"+replaceWord(pages[p][i], " ", "%20")+"</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+day+", "+pubdate+"</pubDate>\n</item>\n";
+			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL;
+			if (!nondownloadabletypes.includes(pages[p][i].substr(pages[p][i].lastIndexOf(".")+1, pages[p][i].length))) {
+				RSSstr += "assets/"+replaceWord(pages[p][i], " ", "%20");
+			} else {
+				RSSstr +="?page="+p.toString();
+			}
+			RSSstr += "</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+day+", "+pubdate+"</pubDate>\n</item>\n";
 		}
 	}
 	console.log(RSSstr+"</channel>\n</rss>")

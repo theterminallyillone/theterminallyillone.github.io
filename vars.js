@@ -13,6 +13,11 @@ var origtitles;
 var currentcolor = 0;
 var URL = window.location.href;
 var page = 0;
+var querystring = window.location.search;
+var urlParams = new URLSearchParams(querystring);
+if (urlParams.get("page") !== null) {
+	page = urlParams.get("page");
+}
 var totalentries = 0;
 var item = function(filename, text) {
 	this.filename = filename;

@@ -25,7 +25,7 @@ var tabtitle = "un rêve";
 var title = "UN RÊVE";
 var DOB = "DOB: 2021-12-16"
 var contacts = ["bumsemails@gmail.com","theterminallyillone@gmail.com","stouchelle@gmail.com"];
-var months = ["January", "February", "March", "April", "May", "June", "July","August","Septmeber","October","November","December"];
+var months = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
 //BTC WALLET ADDRESS
 var walletaddress = "17y98UZzT6fAgfGyT162Dr4KgKYY3Uzne4";
 //THIS IS THE URL FROM WHICH TO CHECK THE BTC WALLET BALANCE - USES HTTP
