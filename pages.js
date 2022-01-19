@@ -6,6 +6,8 @@
 		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
+var DOB = "DLU: 2022-01-18";
+//DATE LAST UPDATED ^
 var pages = [
 	[
 		"Welcome!_Greenwood_IN_2021-12-16_.msg","Pull up a chair, and join us!","Opiate_Greenwood_IN_2021-12-27_.pdf","I suppose the Kratom was kicking in...#poetry","Clouds_Coldwater_MI_2021-11-27_.pdf","A creative endeavor under the influence of Mary Jane.#poetry","Bedtime_Greenwood_IN_2021-09-21_.pdf","This was written during a 4 hour drive, I was in the mood.#poetry","Sunken_Greenwood_IN_2021-09-11_.pdf","Sad boi mood here.#poetry","E86F9A_Greenwood_IN_2021-07-20_.pdf","I was inspired by the color pink, if you couldn't tell.#poetry","Little Moon_Greenwood_IN_2021-07-14_.pdf","This poem was written for my little girl.#poetry"
@@ -20,10 +22,10 @@ var timechange = 2000;
 var buttoncolors = ["#c23030", "#e67627", "#c8d121", "#32a858", "#4287f5", "#a138a8"];
 var nondownloadabletypes = ["msg"];
 var minWinWidth = 600;
-var rssURL = "https://theterminallyillone.github.io/"
+var rssURL = "https://theterminallyillone.github.io/";
+var numRSSPages = 1;
 var tabtitle = "un rêve";
 var title = "UN RÊVE";
-var DOB = "DOB: 2021-12-16"
 var contacts = ["bumsemails@gmail.com","theterminallyillone@gmail.com","stouchelle@gmail.com"];
 var months = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
 //BTC WALLET ADDRESS

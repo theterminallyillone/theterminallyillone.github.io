@@ -16,7 +16,7 @@ var page = 0;
 var querystring = window.location.search;
 var urlParams = new URLSearchParams(querystring);
 if (urlParams.get("page") !== null) {
-	page = urlParams.get("page");
+	page = parseInt(urlParams.get("page")-1, 10);
 }
 var totalentries = 0;
 var item = function(filename, text) {

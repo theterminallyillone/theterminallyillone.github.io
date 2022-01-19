@@ -8,7 +8,8 @@
 */
 
 function init() {
-	if (page > pagetitles.length-1 || page < 0) {
+	document.getElementById("rsslink").href = rssURL+"feed.xml";
+	if ((page-1) >= pagetitles.length-1 || page < 0) {
 		page = 0;
 	}
 	document.getElementById("svgdiv").innerHTML = svgcodeinner+buttoncolors[currentcolor]+svgcodeouter;
@@ -122,7 +123,7 @@ function sendpages(pages) {
 	return pages;
 }
 function show(page) {
-	document.getElementById("pager").innerHTML="This is page "+(page+1).toString()+"/"+pages.length+".<br>";
+	document.getElementById("pager").innerHTML="This is page "+(parseInt(page, 10)+1).toString()+"/"+pages.length+".<br>";
 	insertDashes(document.getElementById("pager").innerHTML.length-4, "pager", "beforeend");
 	if (pages[page].length > 1) {
 		document.getElementById("noentries").innerHTML="There are "+(pages[page].length).toString()+" entries on this page.<br>";
@@ -189,8 +190,11 @@ function replaceWord(str, filter, word) {
 }
 function genrss(pages) {
 	//RSS GENERATION GETS LOGGED IN CONSOLE
+	if (pages.length < numRSSPages) {
+		numRSSPages = pages.length;
+	}
 	var RSSstr = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n<atom:link href=\"https://theterminallyillone.github.io/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n<title>UN RÊVE</title>\n<link>"+rssURL+"</link>\n<description>RSS feed</description>\n";
-	for (var p = 0; p < pages.length; p++) {
+	for (var p = 0; p < numRSSPages; p++) {
 		for (var i = 0; i < pages[p].length; i+=2) {
 			var pubdate = pages[p][i].split("_")[3].toString().split("-");
 			pubdate = pubdate[2]+" "+months[pubdate[1]-1]+" "+pubdate[0]+" 00:00:00 EST";
@@ -199,7 +203,7 @@ function genrss(pages) {
 			if (!nondownloadabletypes.includes(pages[p][i].substr(pages[p][i].lastIndexOf(".")+1, pages[p][i].length))) {
 				RSSstr += "assets/"+replaceWord(pages[p][i], " ", "%20");
 			} else {
-				RSSstr +="?page="+p.toString();
+				RSSstr +="?page="+(p+1).toString();
 			}
 			RSSstr += "</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+day+", "+pubdate+"</pubDate>\n</item>\n";
 		}
