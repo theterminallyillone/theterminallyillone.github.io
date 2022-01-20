@@ -6,18 +6,22 @@
 		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
-var DOB = "DLU: 2022-01-18";
+var DOB = "DLU: 2022-01-19";
 //DATE LAST UPDATED ^
 var pages = [
+	[
+		"To 2022_Greenwood_IN_2022-01-19_.msg","Happy new year, I figured txt is better for mobile.","Slowly_Greenwood_IN_2022-01-06_.txt", "A more lyrical poem written very quickly...#txt#poetry","Frost_Coldwater_MI_2021-11-03_.txt","Basically a description of my honeymoon...#txt#poetry","Songbirds_Coldwater_MI_2021-10-20_.txt","The bird-life in MI is different.#txt#poetry"
+	],
 	[
 		"Welcome!_Greenwood_IN_2021-12-16_.msg","Pull up a chair, and join us!","Opiate_Greenwood_IN_2021-12-27_.pdf","I suppose the Kratom was kicking in...#poetry","Clouds_Coldwater_MI_2021-11-27_.pdf","A creative endeavor under the influence of Mary Jane.#poetry","Bedtime_Greenwood_IN_2021-09-21_.pdf","This was written during a 4 hour drive, I was in the mood.#poetry","Sunken_Greenwood_IN_2021-09-11_.pdf","Sad boi mood here.#poetry","E86F9A_Greenwood_IN_2021-07-20_.pdf","I was inspired by the color pink, if you couldn't tell.#poetry","Little Moon_Greenwood_IN_2021-07-14_.pdf","This poem was written for my little girl.#poetry"
 	]
 ];
 var pagetitles = [
+	"Onward to 2022",
 	"The Beginning"
 ];
-var tags = ["ALL", "poetry"];
-var tagcolors = ["#000000","#DEEB34"];
+var tags = ["ALL", "poetry", "txt"];
+var tagcolors = ["#000000","#DEEB34","#4287F5"];
 var timechange = 2000;
 var buttoncolors = ["#c23030", "#e67627", "#c8d121", "#32a858", "#4287f5", "#a138a8"];
 var nondownloadabletypes = ["msg"];
