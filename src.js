@@ -155,7 +155,13 @@ function show(page) {
 				} else if (pages[page][i].extension == "msg") {
 					insert += "<br><br><br><div id='pg"+page.toString()+"obj"+i.toString()+"'></div><br>";
 				} else if (pages[page][i].extension == "txt") {
-					insert += "<embed width='900px' height='350vw' style='display:none;' id='pg"+page.toString()+"obj"+i.toString()+"' src='assets/"+pages[page][i].filename+"'>";
+					insert += "<embed class='embedclass' width='900px' height='";
+					if (!pages[page][i].tags.includes("haiku")) {
+						insert+="350vw";
+					} else {
+						insert+="120vw";
+					}
+					insert+="' style='display:none;' id='pg"+page.toString()+"obj"+i.toString()+"' src='assets/"+pages[page][i].filename+"'>";
 				}
 				insert += "</div>";
 				document.getElementById("content").insertAdjacentHTML("beforeend", insert);
@@ -197,7 +203,10 @@ function genrss(pages) {
 	for (var p = 0; p < numRSSPages; p++) {
 		for (var i = 0; i < pages[p].length; i+=2) {
 			var pubdate = pages[p][i].split("_")[3].toString().split("-");
-			pubdate = pubdate[2]+" "+months[pubdate[1]-1]+" "+pubdate[0]+" 00:00:00 EST";
+			if (pubdate[2].length != 2) {
+				pubdate[2] = "0"+pubdate[2];
+			}
+			pubdate = pubdate[2]+" "+months[pubdate[1]-1].substr(0,3)+" "+pubdate[0]+" 00:00:00 EST";
 			var day = days[new Date(pubdate).getDay()];
 			RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL;
 			if (!nondownloadabletypes.includes(pages[p][i].substr(pages[p][i].lastIndexOf(".")+1, pages[p][i].length))) {

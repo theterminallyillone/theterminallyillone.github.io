@@ -6,28 +6,32 @@
 		TITLE_CITY_STATE_YEAR-MONTH-DAY_.mp4
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
-var DOB = "DLU: 2022-01-19";
+var DOB = "DLU: 2022-01-21";
 //DATE LAST UPDATED ^
 var pages = [
 	[
-		"To 2022_Greenwood_IN_2022-01-19_.msg","Happy new year, I figured txt is better for mobile.","Slowly_Greenwood_IN_2022-01-06_.txt", "A more lyrical poem written very quickly...#txt#poetry","Frost_Coldwater_MI_2021-11-03_.txt","Basically a description of my honeymoon...#txt#poetry","Songbirds_Coldwater_MI_2021-10-20_.txt","The bird-life in MI is different.#txt#poetry"
+		"Haiku Lost + Found_Greenwood_IN_2022-01-21_.msg","I am collecting my haiku here now; I wrote a haiku every day for awhile.","All That is Left_Greenwood_IN_2020-05-28_.txt","I reflected on the time I had spent away from this world.#txt#poetry#haiku","The Time I Spent_Greenwood_IN_2020-02-11_.txt","I still would.#txt#poetry#haiku","Capable_Greenwood_IN_2020-02-9_.txt","Capability is a reflection of self respect.#txt#poetry#haiku","Incessant_Greenwood_IN_2020-02-5_.txt","The mornings got a bit monotonous.#txt#poetry#haiku","Hot_Greenwood_IN_2020-02-3_.txt","Truthfully, this is what the bottom looks like.#txt#poetry#haiku","Breathe_Greenwood_IN_2020-02-2_.txt","Definitely a tumultuous time for me.#txt#poetry#haiku","Noodles_Greenwood_IN_2020-02-1_.txt","Ramen is the shit.#txt#poetry#haiku","Purr_Greenwood_IN_2020-01-30_.txt","Written about a kitten.#txt#poetry#haiku","N20_Greenwood_IN_2020-01-28_.txt","I'd had little experience with nitrous at this time, to be fair.#txt#poetry#haiku","Impulse_Greenwood_IN_2020-01-24_.txt","She was my defibrilator.","The News Is on at Eleven_Greenwood_IN_2020-01-23_.txt","This is about dementia.#txt#poetry#haiku","A Dab of Poetry_Greenwood_IN_2020-01-22_.txt","This was a rather depressing time for me.#txt#poetry#haiku","Ersatz_Greenwood_IN_2020-01-20_.txt","This was my very first haiku.#txt#poetry#haiku"
+	],
+	[
+		"To 2022_Greenwood_IN_2022-01-19_.msg","Happy new year, I figured txt is better for mobile.","Slowly_Greenwood_IN_2022-01-6_.txt", "A more lyrical poem written very quickly...#txt#poetry","Frost_Coldwater_MI_2021-11-3_.txt","Basically a description of my honeymoon...#txt#poetry","Songbirds_Coldwater_MI_2021-10-20_.txt","The bird-life in MI is different.#txt#poetry"
 	],
 	[
 		"Welcome!_Greenwood_IN_2021-12-16_.msg","Pull up a chair, and join us!","Opiate_Greenwood_IN_2021-12-27_.pdf","I suppose the Kratom was kicking in...#poetry","Clouds_Coldwater_MI_2021-11-27_.pdf","A creative endeavor under the influence of Mary Jane.#poetry","Bedtime_Greenwood_IN_2021-09-21_.pdf","This was written during a 4 hour drive, I was in the mood.#poetry","Sunken_Greenwood_IN_2021-09-11_.pdf","Sad boi mood here.#poetry","E86F9A_Greenwood_IN_2021-07-20_.pdf","I was inspired by the color pink, if you couldn't tell.#poetry","Little Moon_Greenwood_IN_2021-07-14_.pdf","This poem was written for my little girl.#poetry"
 	]
 ];
 var pagetitles = [
+	"And back to 2020",
 	"Onward to 2022",
 	"The Beginning"
 ];
-var tags = ["ALL", "poetry", "txt"];
-var tagcolors = ["#000000","#DEEB34","#4287F5"];
+var tags = ["ALL", "poetry", "txt", "haiku"];
+var tagcolors = ["#000000","#DEEB34","#4287F5","#42F56F"];
 var timechange = 2000;
 var buttoncolors = ["#c23030", "#e67627", "#c8d121", "#32a858", "#4287f5", "#a138a8"];
 var nondownloadabletypes = ["msg"];
 var minWinWidth = 600;
 var rssURL = "https://theterminallyillone.github.io/";
-var numRSSPages = 1;
+var numRSSPages = 2;
 var tabtitle = "un rêve";
 var title = "UN RÊVE";
 var contacts = ["bumsemails@gmail.com","theterminallyillone@gmail.com","stouchelle@gmail.com"];
