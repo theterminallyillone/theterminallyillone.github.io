@@ -5,6 +5,7 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 rl.pause();
+var pages;
 var args = process.argv.slice(2);
 var path = require("path");
 var stamp = (new Date).toUTCString();
@@ -24,13 +25,14 @@ fs.readFile('globals.json',function(err, data) {
 			this.extension = filename[4].substr(filename[4].lastIndexOf(".")+1,filename[4].length);
 			this.text = text;
 			this.tags  = [];
+			this.stamp = stamp;
 			this.downloadable = true;
 			if (vars.globals.nondownloadabletypes.includes(this.extension)) {
 				this.downloadable = false;
 			}
-			for (var i = 0; i < vars.globals.tags.length; i++) {
-				if (this.text.split("#"+vars.globals.tags[i]).length > 1) {
-					this.tags.push(vars.globals.tags[i]);
+			for (var i = 0; i < pages.tags.length; i++) {
+				if (this.text.split("#"+pages.tags[i]).length > 1) {
+					this.tags.push(pages.tags[i]);
 					this.text = this.text.replace("#"+vars.globals.tags[i], "");
 				}
 			}
@@ -38,47 +40,44 @@ fs.readFile('globals.json',function(err, data) {
 				this.tags.push("ALL");
 			}
 		}
+		function replaceWord(str, filter, word) {
+			var done = false;
+			while (!done) {
+				if (str.includes(filter)) {
+					str = str.replace(filter, word);
+				} else {
+					done = true;
+				}
+			}
+			return str;
+		}
 		function genrss(pages) {
 			//RSS GENERATION GETS LOGGED IN CONSOLE
-			if (pages.length < numRSSPages) {
-				numRSSPages = pages.length;
+			if (pages.length < vars.globals.numRSSPages) {
+				vars.globals.numRSSPages = pages.length;
 			}
-			var RSSstr = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n<atom:link href=\"https://theterminallyillone.github.io/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n<title>UN RÊVE</title>\n<link>"+rssURL+"</link>\n<description>RSS feed</description>\n";
-			for (var p = 0; p < numRSSPages; p++) {
-				for (var i = 0; i < pages[p].length; i+=2) {
-					var pubdate = pages[p][i].split("_")[3].toString().split("-");
-					if (pubdate[2].length != 2) {
-						pubdate[2] = "0"+pubdate[2];
-					}
-					pubdate = pubdate[2]+" "+months[pubdate[1]-1].substr(0,3)+" "+pubdate[0]+" 00:00:00 EST";
-					var day = days[new Date(pubdate).getDay()];
-					RSSstr+="<item>\n<title>"+pages[p][i]+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+(i/2).toString()+"</guid>\n<link>"+rssURL;
-					if (!nondownloadabletypes.includes(pages[p][i].substr(pages[p][i].lastIndexOf(".")+1, pages[p][i].length))) {
-						RSSstr += "assets/"+replaceWord(pages[p][i], " ", "%20");
+			var RSSstr = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n<atom:link href=\"https://theterminallyillone.github.io/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n<title>UN RÊVE</title>\n<link>"+vars.globals.rssURL+"</link>\n<description>RSS feed</description>\n";
+			for (var p = 0; p < vars.globals.numRSSPages; p++) {
+				for (var i = 0; i < pages.items[p].length; i++) {
+					RSSstr+="<item>\n<title>"+pages.items[p][i].filename+"</title>\n<guid isPermaLink='false'>"+p.toString()+"-"+i.toString()+"</guid>\n<link>"+vars.globals.rssURL;
+					if (!vars.globals.nondownloadabletypes.includes(pages.items[p][i].filename.substr(pages.items[p][i].filename.lastIndexOf(".")+1, pages.items[p][i].filename.length))) {
+						RSSstr += "assets/"+replaceWord(pages.items[p][i].filename, " ", "%20");
 					} else {
 						RSSstr +="?page="+(p+1).toString();
 					}
-					RSSstr += "</link>\n<description>"+pages[p][i+1]+"</description>\n<pubDate>"+day+", "+pubdate+"</pubDate>\n</item>\n";
+					RSSstr += "</link>\n<description>"+pages.items[p][i].text+"</description>\n<pubDate>"+pages.items[p][i].stamp+"</pubDate>\n</item>\n";
 				}
-			}
-			console.log(RSSstr+"</channel>\n</rss>")
+			}	
+			fs.writeFile("rss.xml", RSSstr+"</channel>\n</rss>",function(){});
 		}
-		function sendpages(pages) {
-			var pagearray = pages;
-			pages = [];
-			for (var i = 0; i < pagearray.length; i++) {
-				pages.push([]);
-				for (var j = 0; j < pagearray[i].length; j+=2) {
-					pages[i].push(new item(pagearray[i][j],pagearray[i][j+1]));
-					totalentries++;
-				}
-			}
-			return pages;
+		function closeFiles() {
+			fs.writeFile("objects.json", JSON.stringify(pages),function(){});
+			genrss(pages);
 		}
 		function init() {
 			fs.readFile('objects.json',function(err, data) {
 				if (!err) {
-					var pages = JSON.parse(data);	
+					pages = JSON.parse(data);	
 					if (args[0] != undefined) {
 						switch(args[0]) {
 							case "help": //list man menu
@@ -87,11 +86,11 @@ fs.readFile('globals.json',function(err, data) {
 								break;
 							case "append": //add new item
 								pages.items[0].unshift(new item(args[1], args[2]))	;
-									fs.writeFile("objects.json", JSON.stringify(pages),function(){});
-								break;
+									closeFiles();
+									break;
 								case "new": //add new page
 									pages.items.unshift([new item(args[1], args[2])])	;
-									fs.writeFile("objects.json", JSON.stringify(pages),function(){});
+									closeFiles();
 									break;
 							case "serve": //start a web server on 8080 or specified port
 								var PORT;
@@ -152,6 +151,7 @@ fs.readFile('globals.json',function(err, data) {
 									console.log(pages.items);
 								break;
 							default:
+								console.log("That sounded like gibberish.")
 								break;
 						}
 					} else {
