@@ -9,6 +9,16 @@ var pages;
 var args = process.argv.slice(2);
 var path = require("path");
 var stamp = (new Date).toUTCString();
+function signFile(filename) {
+}
+function paginate(pages) {
+	var thispage = {title : "", items:[]};
+	for (var p = 0; p < pages.items.length; p++) {
+		thispage.items = pages.items[p];
+		thispage.title = pages.titles[p];
+		fs.writeFile("pages/"+p+".json",JSON.stringify(thispage),function(){});
+	}
+}
 fs.readFile('globals.json',function(err, data) {
 	if (!err) {
 		var vars = JSON.parse(data);
@@ -30,9 +40,9 @@ fs.readFile('globals.json',function(err, data) {
 			if (vars.globals.nondownloadabletypes.includes(this.extension)) {
 				this.downloadable = false;
 			}
-			for (var i = 0; i < pages.tags.length; i++) {
-				if (this.text.split("#"+pages.tags[i]).length > 1) {
-					this.tags.push(pages.tags[i]);
+			for (var i = 0; i < vars.globals.tags.length; i++) {
+				if (this.text.split("#"+vars.globals.tags[i]).length > 1) {
+					this.tags.push(vars.globals.tags[i]);
 					this.text = this.text.replace("#"+vars.globals.tags[i], "");
 				}
 			}
@@ -71,27 +81,51 @@ fs.readFile('globals.json',function(err, data) {
 			fs.writeFile("rss.xml", RSSstr+"</channel>\n</rss>",function(){});
 		}
 		function closeFiles() {
-			fs.writeFile("objects.json", JSON.stringify(pages),function(){});
+			fs.writeFile("pages/master.json", JSON.stringify(pages),function(){});
 			genrss(pages);
+			paginate(pages);
+			vars.globals.DOB = "DLU: "+stamp;
+			fs.writeFile("globals.json", JSON.stringify(vars),function(){});
 		}
 		function init() {
-			fs.readFile('objects.json',function(err, data) {
+			fs.readFile('pages/master.json',function(err, data) {
 				if (!err) {
 					pages = JSON.parse(data);	
 					if (args[0] != undefined) {
 						switch(args[0]) {
 							case "help": //list man menu
+								console.log("COMMAND LIST\n");
+								console.log("help\n");
+								console.log("\t shows this list\n");
+								console.log("edit (page #)\n");
+								console.log("\t change an item\n");
+								console.log("append (filename) (description)\n");
+								console.log("\t add new item on first page\n");
+								console.log("new (filename) (description)\n");
+								console.log("\t add an item on a new page\n");
+								console.log("serve (port)\n");
+								console.log("\t starts an http server on special port\n");
+								console.log("delentry (page #)\n");
+								console.log("\t delete an item on specified page\n");
+								console.log("delpage (page #)\n");
+								console.log("\t deletes a specified page\n");
+								console.log("read\n");
+								console.log("\t logs all pages\n");
 								break;
 							case "edit": //e	dit an item
 								break;
 							case "append": //add new item
 								pages.items[0].unshift(new item(args[1], args[2]))	;
-									closeFiles();
-									break;
-								case "new": //add new page
-									pages.items.unshift([new item(args[1], args[2])])	;
-									closeFiles();
-									break;
+								vars.globals.totalentries +=1;
+								closeFiles();
+								break;
+							case "new": //add new page
+								pages.items.unshift([new item(args[1], args[2])])	;
+								pages.titles.unshift(args[3]);
+								vars.globals.numpages+=1;
+								vars.globals.totalentries+=1;
+								closeFiles();
+								break;
 							case "serve": //start a web server on 8080 or specified port
 								var PORT;
 								if (args[1] != undefined && Number(args[1]) >= 1024 && Number(args[1]) <= 49151) {
@@ -115,19 +149,19 @@ fs.readFile('globals.json',function(err, data) {
 								var server = http.createServer(function (req, res) {
 								var filePath = req.url.replaceAll(/%20/g," ");
 								console.log(filePath);
-								if (filePath == '/')
+								if (filePath == '/') {
 									filePath = '/index.html';
+								}
 								filePath = __dirname+filePath;
 								var extname = path.extname(filePath);
 								var matched = contentTypes[contentExts.indexOf(	extname.substring(1))];
-								console.log(matched);	
 								fs.exists(filePath, function(exists) {
 									if (exists) {
 										fs.readFile(filePath, function(error, content) {
 											if (error) {
 												res.writeHead(500);
 												res.end();
-											} else {                   
+											} else {
 												res.writeHead(200, { 'Content-Type': matched });
 												res.end(content, 'utf-8');                  
 											}
@@ -148,6 +182,7 @@ fs.readFile('globals.json',function(err, data) {
 							case "delpg": //deletes a page
 								break;
 							case "read": //reads a page
+									console.log(pages.titles);
 									console.log(pages.items);
 								break;
 							default:
@@ -158,7 +193,7 @@ fs.readFile('globals.json',function(err, data) {
 						//no parameters given
 					}
 				} else {
-					//objects.json doesn't exist
+					//pages/master.json doesn't exist
 				}
 			});
 		}

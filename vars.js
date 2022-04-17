@@ -7,9 +7,7 @@
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
 
-var showingtag = "ALL";
-var origpages;
-var origtitles;
+var pages = [];
 var currentcolor = 0;
 var URL = window.location.href;
 var page = 0;
@@ -55,5 +53,17 @@ var HttpClient = function() {
 		anHttpRequest.send( null );
 	}
 }
-var client = new HttpClient();
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var client = new HttpClient();
+var vars;
+var thispage;
+var nextpage;
+var lastpage;
+client.get(URL+"globals.json", function(response) {
+	vars = JSON.parse(response);
+	client.get(URL+"pages/"+page.toString()+".json", function(response) {
+		thispage = JSON.parse(response);
+		pages.push(thispage);
+		init();
+	});
+});
