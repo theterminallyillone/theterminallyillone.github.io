@@ -78,7 +78,7 @@ fs.readFile('globals.json',function(err, data) {
 					RSSstr += "</link>\n<description>"+pages.items[p][i].text+"</description>\n<pubDate>"+pages.items[p][i].stamp+"</pubDate>\n</item>\n";
 				}
 			}	
-			fs.writeFile("rss.xml", RSSstr+"</channel>\n</rss>",function(){});
+			fs.writeFile("feed.xml", RSSstr+"</channel>\n</rss>",function(){});
 		}
 		function closeFiles() {
 			fs.writeFile("pages/master.json", JSON.stringify(pages),function(){});
@@ -148,10 +148,13 @@ fs.readFile('globals.json',function(err, data) {
 								var http = require('http');
 								var server = http.createServer(function (req, res) {
 								var filePath = req.url.replaceAll(/%20/g," ");
-								console.log(filePath);
-								if (filePath == '/') {
-									filePath = '/index.html';
+								if (!filePath.includes(".") && filePath[filePath.length-1] != '/') {
+									filePath = filePath+"/";
 								}
+								if (filePath == '/' || !filePath.includes(".")) {
+									filePath += 'index.html';
+								}
+								console.log(filePath);
 								filePath = __dirname+filePath;
 								var extname = path.extname(filePath);
 								var matched = contentTypes[contentExts.indexOf(	extname.substring(1))];
