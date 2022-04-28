@@ -59,6 +59,25 @@ var vars;
 var thispage;
 var nextpage;
 var lastpage;
+var spritesheet = function(sheet, spriteH, spriteW, columns, rows, numSprites) {
+	this.sprites = [[]];
+	var rendered = 0;
+	var spriteX = 0;
+	var spriteY = 0;
+	for (var i = 0; i < rows; i++) {
+		for (var j = 0; j < columns; j++) {
+			if (rendered<numSprites) {
+				this.sprites[i].push("<div style=\"display:inline-block;width:"+spriteW+"px;height:"+spriteH+"px; background:url('"+sheet+"'); background-position:"+spriteX+"px "+spriteY+"px;\"></div>");
+				spriteX -= spriteW;
+				rendered++;
+			}
+		}
+		spriteY -= spriteH;
+		this.sprites.push([]);
+	}
+	this.sprites.pop();
+}
+var emojis = new spritesheet("emojis.png", 72, 72, 16, 10, 151);
 client.get(URL+"globals.json", function(response) {
 	vars = JSON.parse(response);
 	client.get(URL+"pages/"+page.toString()+".json", function(response) {
