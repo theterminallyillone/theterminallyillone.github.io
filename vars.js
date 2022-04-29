@@ -67,7 +67,7 @@ var spritesheet = function(sheet, spriteH, spriteW, columns, rows, numSprites) {
 	for (var i = 0; i < rows; i++) {
 		for (var j = 0; j < columns; j++) {
 			if (rendered<numSprites) {
-				this.sprites[i].push("<div style=\"display:inline-block;width:"+spriteW+"px;height:"+spriteH+"px; background:url('"+sheet+"'); background-position:"+spriteX+"px "+spriteY+"px;\"></div>");
+				this.sprites[i].push("<section style=\"position:relative;top:30px;display:inline-block;width:"+spriteW+"px;height:"+spriteH+"px; background:url('"+sheet+"'); background-position:"+spriteX+"px "+spriteY+"px;\"></section>");
 				spriteX -= spriteW;
 				rendered++;
 			}

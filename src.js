@@ -105,7 +105,7 @@ function show(page) {
 				for (var j = 0; j < thispage.items[i].tags.length; j++) {
 					insert+=("#"+thispage.items[i].tags[j]).fontcolor(vars.globals.tagcolors[vars.globals.tags.indexOf(thispage.items[i].tags[j])])+" ";
 				}
-				insert+="<br><br>&#9<div style='vertival-align:top;display:inline-block;'>"+insertEmojis(thispage.items[i].text)+"</div></pre></h2></div>";
+				insert+="<br><br>&#9<div style='display:inline;'>"+insertEmojis(thispage.items[i].text)+"</div></pre></h2></div>";
 				if(thispage.items[i].downloadable) {
 					insert +="<br><button style='display:none' id='dpg"+page.toString()+"obj"+i.toString()+"'><a href='assets/"+thispage.items[i].filename+"' download>Download</a></button><br><br><br>";
 				}
