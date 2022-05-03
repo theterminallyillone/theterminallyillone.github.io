@@ -42,14 +42,19 @@ function init() {
 }
 function insertEmojis(text) {
 	var matchesmoji = /(\^\S\d)/;
+	var includesmoji = false;
 	var done = false;
 	while (!done) {
 		if (matchesmoji.test(text)) {
 			var matched = text.match(matchesmoji)[0];
 			text = text.replace(matched, emojis.sprites[matched[2]][parseInt(matched[1], 16)]);
+			includesmoji = true;
 		} else {
 			done = true;
 		}
+	}
+	if (includesmoji) {
+		text += "<br><br><br><br>";
 	}
 	return text;
 }
