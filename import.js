@@ -22,8 +22,8 @@ function paginate(pages) {
 fs.readFile('globals.json',function(err, data) {
 	if (!err) {
 		var vars = JSON.parse(data);
-		var contentExts = ["js","xml","json","pdf","zip","mp3","jpeg","jpg","gif","svg","png","css","html","txt","mp4","wav"];
-		var contentTypes = ["application/javascript","text/xml","application/json","application/pdf","application/zip","audio/mpeg","image/jpeg","image/jpeg","image/gif","image/svg+xml","image/png","text/css","text/html","text/plain","video/mp4","audio/x-wav"];
+		var contentExts = ["ttf","js","xml","json","pdf","zip","mp3","jpeg","jpg","gif","svg","png","css","html","txt","mp4","wav"];
+		var contentTypes = ["application/x-font-ttf","application/javascript","text/xml","application/json","application/pdf","application/zip","audio/mpeg","image/jpeg","image/jpeg","image/gif","image/svg+xml","image/png","text/css","text/html","text/plain","video/mp4","audio/x-wav"];
 		var item = function(filename, text) {
 			this.filename = filename;
 			filename = filename.split("_");
@@ -62,7 +62,6 @@ fs.readFile('globals.json',function(err, data) {
 			return str;
 		}
 		function genrss(pages) {
-			//RSS GENERATION GETS LOGGED IN CONSOLE
 			if (pages.length < vars.globals.numRSSPages) {
 				vars.globals.numRSSPages = pages.length;
 			}
@@ -78,7 +77,7 @@ fs.readFile('globals.json',function(err, data) {
 					RSSstr += "</link>\n<description>"+pages.items[p][i].text+"</description>\n<pubDate>"+pages.items[p][i].stamp+"</pubDate>\n</item>\n";
 				}
 			}	
-			fs.writeFile("feed.xml", RSSstr+"</channel>\n</rss>",function(){});
+			fs.writeFile("rss.xml", RSSstr+"</channel>\n</rss>",function(){});
 		}
 		function closeFiles() {
 			fs.writeFile("pages/master.json", JSON.stringify(pages),function(){});
@@ -101,7 +100,7 @@ fs.readFile('globals.json',function(err, data) {
 								console.log("\t change an item\n");
 								console.log("append (filename) (description)\n");
 								console.log("\t add new item on first page\n");
-								console.log("new (filename) (description)\n");
+								console.log("new (filename) (description) (title)\n");
 								console.log("\t add an item on a new page\n");
 								console.log("serve (port)\n");
 								console.log("\t starts an http server on special port\n");
@@ -151,7 +150,7 @@ fs.readFile('globals.json',function(err, data) {
 								if (!filePath.includes(".") && filePath[filePath.length-1] != '/') {
 									filePath = filePath+"/";
 								}
-								if (filePath == '/' || !filePath.includes(".")) {
+								if (filePath[filePath.length-1] == '/' || !filePath.includes(".")) {
 									filePath += 'index.html';
 								}
 								console.log(filePath);
