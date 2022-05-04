@@ -7,6 +7,7 @@
 		EXAMPLE_Indianapolis_IN_2021-11-05_.mp4
 */
 
+var tagclicked = false;
 var pages = [];
 var currentcolor = 0;
 var URL = window.location.href;
@@ -34,6 +35,7 @@ var vars;
 var thispage;
 var nextpage;
 var lastpage;
+var reservedpage;
 var spritesheet = function(sheet, spriteH, spriteW, columns, rows, numSprites) {
 	this.sprites = [[]];
 	var rendered = 0;
@@ -57,6 +59,7 @@ client.get(URL+"globals.json", function(response) {
 	vars = JSON.parse(response);
 	client.get(URL+"pages/"+page.toString()+".json", function(response) {
 		thispage = JSON.parse(response);
+		reservedpage = thispage;
 		pages.push(thispage);
 		init();
 	});

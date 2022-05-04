@@ -43,18 +43,18 @@
 	<div id="showremoved" class="text" style="display:none">
 		<center>
 			<h1>Click
-			<button onclick="remove(); if(page-1 != 0) {page-=1;} else { page -=1; document.getElementById('showremoved').style='display:none'} nextpage = thispage; thispage = pages[page]; show(page);" style="margin-right:1%">here
+			<button onclick="remove(); if(page-1 != 0) {page-=1;} else { page -=1; document.getElementById('showremoved').style='display:none'} nextpage = thispage; thispage = pages[page]; reservedpage = thispage; show(page);" style="margin-right:1%">here
 			</button>to show more content.</h1>
 		</center>
 	</div>
 	<div id="content"></div>	
 	<div id="showmore" class="text">
 		<h1>Click
-		<button onclick="remove(); document.getElementById('showremoved').style=''; page+=1;thispage = nextpage; show(page); getNextPage();" style="margin-right:1%">here
+		<button onclick="remove(); document.getElementById('showremoved').style=''; page+=1;thispage = nextpage; reservedpage = thispage; show(page); getNextPage();" style="margin-right:1%">here
 		</button>to show more content.
 		</h1>
 	</div>
-	<br><br><div class="tags" id="tagbuttons"><span class="tagbutton" style="margin-left:0;"onclick=""><b>#ALL</b></span></div><br><br><br>
+	<br><br><div class="tags" id="tagbuttons"></div><br><br><br>
 		<center><div class="heading">
 			<div style="margin-top:5%;" id="donatetitle">
 				<h4>Direct charitable donations of BTC below.

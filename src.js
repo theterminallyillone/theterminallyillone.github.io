@@ -35,9 +35,7 @@ function init() {
 	if (window.innerHeight > document.getElementById("pagetitle").offsetTop) {
 		document.getElementById("pagetitle").style = "display:block; margin-top:"+((window.innerHeight-document.getElementById("pagetitle").offsetTop)+20).toString()+"px;";
 	}
-	for (var i = 0; i < thispage.tags.length; i++) {
-		document.getElementById("tagbuttons").insertAdjacentHTML("beforeend", "<span class='tagbutton' onclick='' style='color:"+getTagColor(thispage.tags[i])+";'><b>#"+thispage.tags[i]+"</b></span>");
-	}
+	insertTagButtons();
 	setInterval(changeColor, vars.globals.timechange);
 }
 function insertEmojis(text) {
@@ -58,10 +56,33 @@ function insertEmojis(text) {
 	}
 	return text;
 }
+function insertTagButtons() {
+	document.getElementById("tagbuttons").innerHTML = "<span class=\"tagbutton\" style=\"margin-left:0;\" onclick=\"sortByTag('ALL')\"><b>#ALL</b></span>";
+	for (var i = 0; i < thispage.tags.length; i++) {
+		document.getElementById("tagbuttons").insertAdjacentHTML("beforeend", "<span class='tagbutton' onclick='sortByTag(\""+thispage.tags[i]+"\")' style='color:"+getTagColor(thispage.tags[i])+";'><b>#"+thispage.tags[i]+"</b></span>");
+	}
+}
 function sortByTag(tag) {
+	if (tag == "ALL") {
+		thispage = reservedpage;
+		tagclicked = false;
+	} else if (!tagclicked) {
+		tagclicked = true;
+		reservedpage = thispage;
+		var sortedpage = {title:thispage.title,tags:[tag],items:[]};
+		for (var i = 0; i < thispage.items.length; i++) {
+			if (thispage.items[i].tags.includes(tag)) {
+				sortedpage.items.push(thispage.items[i]);
+			}
+		}
+		thispage = sortedpage;
+	}
+	document.getElementById("content").innerHTML = "";
+	show(page);
+	insertTagButtons();
 }
 function getTagColor(tagname) {
-	var color = "#0000FF";
+	var color = "";
 	for (var i = 0; i < vars.globals.tags.length; i++) {
 		if (vars.globals.tags[i][0] == tagname) {
 			color = vars.globals.tags[i][1];
@@ -93,7 +114,7 @@ function insertDashes(Dashlength, itemid, where) {
 	}
 }
 function remove() {
-	document.getElementById("content").innerHTML = ""
+	document.getElementById("content").innerHTML = "";
 	document.getElementById("showremoved").style="";
 }
 function getNextPage() {
