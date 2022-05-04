@@ -35,8 +35,8 @@ function init() {
 	if (window.innerHeight > document.getElementById("pagetitle").offsetTop) {
 		document.getElementById("pagetitle").style = "display:block; margin-top:"+((window.innerHeight-document.getElementById("pagetitle").offsetTop)+20).toString()+"px;";
 	}
-	for (var i = 1; i < vars.globals.tags.length; i++) {
-		document.getElementById("tagbuttons").insertAdjacentHTML("beforeend", "<span class='tagbutton' onclick='' style='color:"+vars.globals.tagcolors[i]+";'><b>#"+vars.globals.tags[i]+"</b></span>");
+	for (var i = 0; i < thispage.tags.length; i++) {
+		document.getElementById("tagbuttons").insertAdjacentHTML("beforeend", "<span class='tagbutton' onclick='' style='color:"+getTagColor(thispage.tags[i])+";'><b>#"+thispage.tags[i]+"</b></span>");
 	}
 	setInterval(changeColor, vars.globals.timechange);
 }
@@ -57,6 +57,18 @@ function insertEmojis(text) {
 		text += "<br><br><br><br>";
 	}
 	return text;
+}
+function sortByTag(tag) {
+}
+function getTagColor(tagname) {
+	var color = "#0000FF";
+	for (var i = 0; i < vars.globals.tags.length; i++) {
+		if (vars.globals.tags[i][0] == tagname) {
+			color = vars.globals.tags[i][1];
+			break;
+		}
+	}
+	return color;
 }
 function changeColor() {
 	for (i = 0; i < document.getElementsByTagName("button").length; i++) {
@@ -108,7 +120,7 @@ function show(page) {
 				let insert = "<div id='pg"+page.toString()+"c"+i.toString()+"' class='text'><h1>"+thispage.items[i].title.replace(/-/g, " ")+" ["+thispage.items[i].extension+"] "+thispage.items[i].city+"<div style='float:right'>"+thispage.items[i].date+"</div></h1><button id='pg"+page.toString()+"b"+i.toString()+"' onclick=\"document.getElementById('pg"+page.toString()+"b"+i.toString()+"').style='display:none';document.getElementById('pg"+page.toString()+"obj"+i.toString()+"').style='';document.getElementById('pg"+page.toString()+"tex"+i.toString()+"').style='';document.getElementById('dpg"+page.toString()+"obj"+i.toString()+"').style='';\">Display</button>";
 				insert+="<div id='pg"+page.toString()+"tex"+i.toString()+"' style='display:none'><h2><pre>";
 				for (var j = 0; j < thispage.items[i].tags.length; j++) {
-					insert+=("#"+thispage.items[i].tags[j]).fontcolor(vars.globals.tagcolors[vars.globals.tags.indexOf(thispage.items[i].tags[j])])+" ";
+					insert+=("#"+thispage.items[i].tags[j]).fontcolor(getTagColor(thispage.items[i].tags[j]))+" ";
 				}
 				insert+="<br><br>&#9<div style='display:inline;'>"+insertEmojis(thispage.items[i].text)+"</div></pre></h2></div>";
 				if(thispage.items[i].downloadable) {

@@ -17,31 +17,6 @@ if (urlParams.get("page") !== null) {
 	page = parseInt(urlParams.get("page")-1, 10);
 }
 var totalentries = 0;
-var item = function(filename, text) {
-	this.filename = filename;
-	filename = filename.split("_");
-	var datestring = filename[3].toString();
-	datestring = datestring.split("-");
-	this.title = filename[0];
-	this.city = filename[1]+" "+filename[2];
-	this.date = datestring[0]+" "+months[datestring[1]-1]+" "+datestring[2];
-	this.extension = filename[4].substr(filename[4].lastIndexOf(".")+1,filename[4].length);
-	this.text = text;
-	this.tags  = [];
-	this.downloadable = true;
-	if (nondownloadabletypes.includes(this.extension)) {
-		this.downloadable = false;
-	}
-	for (var i = 0; i < tags.length; i++) {
-		if (this.text.split("#"+tags[i]).length > 1) {
-			this.tags.push(tags[i]);
-			this.text = this.text.replace("#"+tags[i], "");
-		}
-	}
-	if (this.tags.length == 0) {
-		this.tags.push("ALL");
-	}
-}
 var HttpClient = function() {
 	this.get = function(aUrl, aCallback) {
 		var anHttpRequest = new XMLHttpRequest();

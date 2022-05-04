@@ -12,8 +12,13 @@ var stamp = (new Date).toUTCString();
 function signFile(filename) {
 }
 function paginate(pages) {
-	var thispage = {title : "", items:[]};
+	var thispage = { title : "", tags : [], items : [] };
 	for (var p = 0; p < pages.items.length; p++) {
+		for (var j = 0; j < pages.items[i].tags.length; j++) {
+			if (!thispage.tags.includes(pages.items.tags[j]) && pages.items.tags[j] != "ALL") {
+				thispage.tags.push(pages.items.tags[j]);
+			}
+		} 
 		thispage.items = pages.items[p];
 		thispage.title = pages.titles[p];
 		fs.writeFile("pages/"+p+".json",JSON.stringify(thispage),function(){});
@@ -41,9 +46,9 @@ fs.readFile('globals.json',function(err, data) {
 				this.downloadable = false;
 			}
 			for (var i = 0; i < vars.globals.tags.length; i++) {
-				if (this.text.split("#"+vars.globals.tags[i]).length > 1) {
-					this.tags.push(vars.globals.tags[i]);
-					this.text = this.text.replace("#"+vars.globals.tags[i], "");
+				if (this.text.split("#"+vars.globals.tags[i][0]).length > 1) {
+					this.tags.push(vars.globals.tags[i][0]);
+					this.text = this.text.replace("#"+vars.globals.tags[i][0], "");
 				}
 			}
 			if (this.tags.length == 0) {
