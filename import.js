@@ -14,9 +14,11 @@ function signFile(filename) {
 function paginate(pages) {
 	var thispage = { title : "", tags : [], items : [] };
 	for (var p = 0; p < pages.items.length; p++) {
-		for (var j = 0; j < pages.items[i].tags.length; j++) {
-			if (!thispage.tags.includes(pages.items.tags[j]) && pages.items.tags[j] != "ALL") {
-				thispage.tags.push(pages.items.tags[j]);
+		if (pages.items[p].tags !== undefined) {
+			for (var j = 0; j < pages.items[p].tags.length; j++) {
+				if (!thispage.tags.includes(pages.items.tags[j]) && pages.items.tags[j] != "ALL") {
+					thispage.tags.push(pages.items.tags[j]);
+				}
 			}
 		} 
 		thispage.items = pages.items[p];
@@ -116,7 +118,7 @@ fs.readFile('globals.json',function(err, data) {
 								console.log("read\n");
 								console.log("\t logs all pages\n");
 								break;
-							case "edit": //e	dit an item
+							case "edit": //edit an item
 								break;
 							case "append": //add new item
 								pages.items[0].unshift(new item(args[1], args[2]))	;
@@ -152,6 +154,7 @@ fs.readFile('globals.json',function(err, data) {
 								var http = require('http');
 								var server = http.createServer(function (req, res) {
 								var filePath = req.url.replaceAll(/%20/g," ");
+								filePath = filePath.replaceAll(/%C2%A0/g, " ");
 								if (!filePath.includes(".") && filePath[filePath.length-1] != '/') {
 									filePath = filePath+"/";
 								}
