@@ -154,7 +154,7 @@ fs.readFile('globals.json',function(err, data) {
 								var http = require('http');
 								var server = http.createServer(function (req, res) {
 								var filePath = req.url.replaceAll(/%20/g," ");
-								filePath = filePath.replaceAll(/%C2%A0/g, " ");
+								//filePath = filePath.replaceAll(/%C2%A0/g, " ");
 								if (!filePath.includes(".") && filePath[filePath.length-1] != '/') {
 									filePath = filePath+"/";
 								}
